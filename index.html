@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle - Berbagi Makanan, Berbagi Harapan</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div>
-                <a href="#home">FoodCycle</a>
-                <ul>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="#home" class="logo">FoodCycle</a>
+                <ul class="nav-links">
                     <li><a href="#home">Beranda</a></li>
                     <li><a href="#about">Tentang Kami</a></li>
                     <li><a href="#fitur">Fitur</a></li>
@@ -20,237 +22,307 @@
                     <li><a href="#berita">Berita</a></li>
                     <li><a href="#kontak">Kontak</a></li>
                 </ul>
-                <a href="#Donasi">Mulai Donasi</a>
-            </div>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <div>
-                <div>
-                    <h1>Berbagi Makanan, Berbagi Harapan</h1>
-                    <p>Platform digital yang menghubungkan donatur makanan dengan mereka yang membutuhkan. Mari bersama-sama mengurangi food waste dan membantu sesama.</p>
-                    <div>
-                        <a href="#donasi">Donasi Sekarang</a>
-                        <a href="#demo">Lihat Demo</a>
-                        <a href="#relawan">Jadi Relawan</a>
-                    </div>
-                    <div>
-                        <div>
-                            <strong>10K+</strong>
-                            <strong>Makanan Diselamatkan</strong>
-                        </div>
-                        <div>
-                            <strong>5K+</strong>
-                            <strong>Keluarga Terbantu</strong>
-                        </div>
-                        <div>
-                            <strong>500+</strong>
-                            <strong>Mitra Donatur</strong>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <img src="gambar1.jpg" alt="gambar makanan">
-                </div>
-            </div>
-        </section>
-        <section>
-            <header>
-                <h2>Mengapa Memilih FoodCycle?</h2>
-                <p>Platform terpercaya yang memudahkan proses donasi makanan dengan teknologi modern dan sistem yang transparan</p>
-            </header>
-            <div>
-                <article>
-                    <h3>Mudah Digunakan</h3>
-                    <p>Interface yang intuitif memungkinkan siapa saja dapat berdonasi atau menerima bantuan makanan dengan mudah melalui smartphone</p>
-                </article>
-                <article>
-                    <h3>Berbasi Lokasi</h3>
-                    <p>Sistem GPS terintegrasi menghubungkan donatur dengan penerima dalam radius terdekat untuk distribusi yang efisien</p>
-                </article>
-                <article>
-                    <h3>Aman & Terpercaya</h3>
-                    <p>Sistem verifikasi berlapis dan tracking real-time memastikan makanan sampai ke tangan yang tepat dengan aman</p>
-                </article>
-                <article>
-                    <h3>Real-time Updates</h3>
-                    <p>Notifikasi langsung untuk setiap donasi, pickup, dan delivery agar semua pihak selalu mendapat informasi terkini</p>
-                </article>
-                <article>
-                    <h3>Dashboard Analytics</h3>
-                    <p>Pantau dampak kontribusi Anda dengan statistik detail tentang makanan yang telah diselamatkan dan keluarga yang terbantu</p>
-                </article>
-                <article>
-                    <h3>Komunitas Peduli</h3>
-                    <p>Bergabung dengan jaringan relawan dan organisasi yang berkomitmen untuk mengurangi food waste di Indonesia</p>
-                </article>
-            </div>
-        </section>
-        <section>
-            <header>
-                <h2>Cara Kerja FoodCycle</h2>
-                <p>Proses sederhana dalam 4 langkah untuk mulai berbagi makanan dan membantu sesama</p>
-            </header>
-            <div>
-                <article>
-                    <h3>Daftar & Verifikasi</h3>
-                    <p>Buat akun dan lengkapi profil Anda. Tim kami akan memverifikasi untuk memastikan keamanan komunitas</p>
-                </article>
-                <article>
-                    <h3>Posting Makanan</h3>
-                    <p>Upload foto makanan yang ingin didonasikan beserta detail lokasi, jumlah porsi, dan waktu pickup</p>
-                </article>
-                <article>
-                    <h3>Matching & Koordinasi</h3>
-                    <p>Sistem akan mencocokkan dengan penerima terdekat dan mengatur jadwal pickup yang sesuai</p>
-                </article>
-                <article>
-                    <h3>Distribusi & Feedback</h3>
-                    <p>Relawan mengambil dan mendistribusikan makanan, lalu memberikan update dan feedback melalui aplikasi</p>
-                </article>
-            </div>
-        </section>
-        <section>
-            <header>
-                <h2>Dampak Yang Telah Kami Ciptakan</h2>
-                <p>Bersama-sama, kita telah membuat perubahan nyata dalam mengurangi food waste dan membantu masyarakat</p>
-            </header>
-            <div>
-                <div>
-                    <strong>15.234</strong>
-                    <strong>Kg Makanan Diselamatkan</strong>
-                </div>
-                <div>
-                    <strong>8.567</strong>
-                    <strong>Keluarga Terbantu</strong>
-                </div>
-                <div>
-                    <strong>1.234</strong>
-                    <strong>Donatur Aktif</strong>
-                </div>
-                <div>
-                    <strong>25</strong>
-                    <strong>Kota Terjangkau</strong>
-                </div>
-            </div>
-        </section>
-        <section>
-            <header>
-                <h2>Tentang FoodCycle</h2>
-                <p>Kami adalah platform yang berdedikasi untuk mengurangi limmbah makanan dan menyalurkan makanan surplus kepada mereka yang membutuhkan</p>
-            </header>
-            <div>
-                <h3>Misi Kami</h3>
-                <p>FoodCycle hadir untuk menciptakan Indonesia tanpa kelaparan dan limbah makanan. Kami menghubungkan restoran, UMKM, dan individu yang memiliki makanan surplus dengan komunitas yang membutuhkan melalui teknologi digital yang mudah digunakan.</p>
-                <p>Didirikan pada tahun 2025, kami telah bermitra dengan ratusan donatur dan relawan di seluruh Indonesia untuk menyelamatkan ribuan kilogram makanan dan mendistribusikannya ke keluarga, panti asuhan, dan komunitas marginal. Setiap donasi membantu mengurangi emisi karbon dan mendukung lingkungan yang lebih bersih.</p>
-                <a href="#More">Pelajari Lebih Lanjut</a>
-            </div>
-            <div>
-                <img src="gambar2.jpg" alt="gambar tentang kami">
-            </div>
-        </section>
-        <section>
-            <header>
-                <h2>Apa Kata Mereka</h2>
-                <p>Cerita dari donatur, relawan, dan penerima yang telah menjadi bagian dari perjalanan FoodCycle</p>
-            </header>
-            <div>
-                <article>
-                    <img src="#" alt="Ani Susanti">
-                    <p>"FoodCycle membuat saya merasa berkontribusi nyata. Donasi makanan dari restoran saya kini sampai ke keluarga yang membutuhkan dengan cepat dan aman."</p>
-                    <h4>Ani Susanti</h4>
-                    <strong>Pemilik Restoran, Jakarta</strong>
-                </article>
-                <article>
-                    <img src="#" alt="Budi Santoso">
-                    <p>"Sebagai relawan, saya bangga bisa mengantar makanan ke panti asuhan. Aplikasi FoodCycle sangat membantu koordinasi!"</p>
-                    <h4>Budi Santoso</h4>
-                    <strong>Relawan, Surabaya</strong>
-                </article>
-                <article>
-                    <img src="#" alt="Ibu Ratna">
-                    <p>"Makanan yang kami terima dari FoodCycle sangat membantu anak-anak di panti. Terima kasih atas kebaikan hati semua donatur!"</p>
-                    <h4>Ibu Ratna</h4>
-                    <strong>Pengelola Panti Asuhan, Bandung</strong>
-                </article>
-            </div>
-        </section>
-        <section>
-            <header>
-                <h2>Berita Terbaru</h2>
-                <p>Ikuti kabar terbaru tentang inisiatif dan dampak FoodCyce di seluruh Indonesia</p>
-            </header>
-            <div>
-                <article>
-                    <img src="#" alt="gambar1">
-                    <h3>FoodCycle Capai 1 Ton Makanan Diselamatkan di Jakarta</h3>
-                    <p>Pada bulan ini, FoodCycle berhasil menyelamatkan 1 ton makanan surplus dari restoran dan UMKM di Jakarta, didistribusikan ke 500 keluarga.</p>
-                    <a href="#">Baca Selengkapnya</a>
-                </article>
-                <article>
-                    <img src="#" alt="gambar2">
-                    <h3>Kerjasama Baru dengan Pasar Tradisional</h3>
-                    <p>FoodCycle kini bermitra dengan pasar tradisional di Surabaya untuk mengumpulkan sayuran dan buah surplus, mendukung petani lokal.</p>
-                    <a href="#">Baca Selengkapnya</a>
-                </article>
-                <article>
-                    <img src="#" alt="gambar3">
-                    <h3>Relawan FoodCycle Rayakan Hari Lingkungan</h3>
-                    <p>Pada Hari Lingkungan Sedunia, relawan FoodCycle mengadakan kampanye edukasi tentang pengurangan limbah makanan di 10 kota.</p>
-                    <a href="#">Baca Selengkapnya</a>
-                </article>
-            </div>
-        </section>
-        <section>
-            <h2>Mari Mulai Berbagi Hari Ini</h2>
-            <p>Bergabunglah untuk membuat perbedaan dengan donasi Anda.</p>
-            <div>
-                <a href="#donasi">Mulai Donasi</a>
-                <a href="#relawan">Jadi Relawan</a>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <div>
-            <div>
-                <h3>FoodCycle</h3>
-                <p>Platform digital untuk menghubungkan surplus makanan dengan yang membutuhkan. Bersama-sama kita ciptakan Indonesia tanpa kelaparan dan waste makanan.</p>
-                <div>
-                    <a href="#">Facebook</a>
-                    <a href="#">Twitter</a>
-                    <a href="#">Instagram</a>
-                    <a href="#">LinkedIn</a>
-                </div>
-            </div>
-            <div>
-                <h3>Menu Utama</h3>
-                <a href="#home">Beranda</a>
-                <a href="#about">Tentang Kami</a>
-                <a href="#fitur">Fitur</a>
-                <a href="#carakerja">Cara Kerja</a>
-                <a href="#dampak">Dampak</a>
-                <a href="#testimoni">Testimoni</a>
-                <a href="#berita">Berita</a>
-                <a href="#kontak">Kontak</a>
-            </div>
-            <div>
-                <h3>Layanan</h3>
-                <a href="#">Donasi Makanan</a>
-                <a href="#">Minta Bantuan</a>
-                <a href="#">Jadi Relawan</a>
-                <a href="#">Partnership</a>
-                <a href="#">Laporan Dampak</a>
-            </div>
-            <div>
-                <h3>Kontak</h3>
-                <p>hello@foodcycle.id</p>
-                <p>+62 82 1234 5678</p>
+                <a href="#" class="btn btn-cta">Mulai Donasi</a>
             </div>
         </div>
-        <div>
-            <p>&copy; 2025 FoodCycle. All Rights Reserved.</p>
-            <a target="_blank" href="https://foodcycle.id/">Referensi web</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Berbagi <span class="highlight">Makanan</span>, Berbagi Harapan</h1>
+                    <p>Platform digital yang menghubungkan donatur makanan dengan mereka yang membutuhkan. Mari bersama-sama mengurangi food waste dan membantu sesama.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary">Donasi Sekarang</a>
+                        <a href="#" class="btn btn-secondary">Jadi Relawan</a>
+                    </div>
+                    <div class="statistik">
+                        <div class="item-statistik">
+                            <span class="angka-statistik">10K+</span>
+                            <span class="label-statistik">Makanan Diselamatkan</span>
+                        </div>
+                        <div class="item-statistik">
+                            <span class="angka-statistik">5K+</span>
+                            <span class="label-statistik">Keluarga Terbantu</span>
+                        </div>
+                        <div class="item-statistik">
+                            <span class="angka-statistik">500+</span>
+                            <span class="label-statistik">Mitra Donatur</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="gambar1.jpg" alt="Makanan Donasi">
+                    <div class="kartu kartu-mengambang kartu1">
+                        <h4>100 Porsi</h4>
+                        <p>Diselamatkan hari ini</p>
+                    </div>
+                    <div class="kartu kartu-mengambang kartu2">
+                        <h4>50 Keluarga</h4>
+                        <p>Mendapat bantuan</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Fitur -->
+    <section class="features" id="fitur">
+        <div class="container">
+            <div class="section-header">
+                <h2>Mengapa Memilih FoodCycle?</h2>
+                <p>Platform terpercaya yang memudahkan proses donasi makanan dengan teknologi modern dan sistem yang transparan</p>
+            </div>
+            <div class="features-grid">
+                <div class="kartu kartu-fitur">
+                    <h3>Mudah Digunakan</h3>
+                    <p>Interface yang intuitif memungkinkan siapa saja dapat berdonasi atau menerima bantuan makanan dengan mudah melalui smartphone</p>
+                </div>
+                <div class="kartu kartu-fitur">
+                    <h3>Berbasis Lokasi</h3>
+                    <p>Sistem GPS terintegrasi menghubungkan donatur dengan penerima dalam radius terdekat untuk distribusi yang efisien</p>
+                </div>
+                <div class="kartu kartu-fitur">
+                    <h3>Aman & Terpercaya</h3>
+                    <p>Sistem verifikasi berlapis dan tracking real-time memastikan makanan sampai ke tangan yang tepat dengan aman</p>
+                </div>
+                <div class="kartu kartu-fitur">
+                    <h3>Real-time Updates</h3>
+                    <p>Notifikasi langsung untuk setiap donasi, pickup, dan delivery agar semua pihak selalu mendapat informasi terkini</p>
+                </div>
+                <div class="kartu kartu-fitur">
+                    <h3>Dashboard Analytics</h3>
+                    <p>Pantau dampak kontribusi Anda dengan statistik detail tentang makanan yang telah diselamatkan dan keluarga yang terbantu</p>
+                </div>
+                <div class="kartu kartu-fitur">
+                    <h3>Komunitas Peduli</h3>
+                    <p>Bergabung dengan jaringan relawan dan organisasi yang berkomitmen untuk mengurangi food waste di Indonesia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- section cara kerja -->
+    <section class="cara-kerja" id="carakerja">
+        <div class="container">
+            <div class="section-header">
+                <h2>Cara Kerja FoodCycle</h2>
+                <p>Proses sederhana dalam 4 langkah untuk mulai berbagi makanan dan membantu sesama</p>
+            </div>
+            <div class="langkah">
+                <div class="item-langkah">
+                    <div class="nomor-langkah">1</div>
+                    <h3>Daftar & Verifikasi</h3>
+                    <p>Buat akun dan lengkapi profil Anda. Tim kami akan memverifikasi untuk memastikan keamanan komunitas</p>
+                </div>
+                <div class="item-langkah">
+                    <div class="nomor-langkah">2</div>
+                    <h3>Posting Makanan</h3>
+                    <p>Upload foto makanan yang ingin didonasikan beserta detail lokasi, jumlah porsi, dan waktu pickup</p>
+                </div>
+                <div class="item-langkah">
+                    <div class="nomor-langkah">3</div>
+                    <h3>Matching & Koordinasi</h3>
+                    <p>Sistem akan mencocokkan dengan penerima terdekat dan mengatur jadwal pickup yang sesuai</p>
+                </div>
+                <div class="item-langkah">
+                    <div class="nomor-langkah">4</div>
+                    <h3>Distribusi & Feedback</h3>
+                    <p>Relawan mengambil dan mendistribusikan makanan, lalu memberikan update dan feedback melalui aplikasi</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Dampak -->
+    <section class="dampak" id="dampak">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="color: aliceblue;">Dampak Yang Telah Kami Ciptakan</h2>
+                <p style="color: aliceblue;">Bersama-sama, kita telah membuat perubahan nyata dalam mengurangi food waste dan membantu masyarakat</p>
+            </div>
+            <div class="grid-dampak">
+                <div class="dampak-stat">
+                    <span class="angka-dampak">15,234</span><br>
+                    <span class="label-dampak">Kg Makanan Diselamatkan</span>
+                </div>
+                <div class="dampak-stat">
+                    <span class="angka-dampak">8,567</span><br>
+                    <span class="label-dampak">Keluarga Terbantu</span>
+                </div>
+                <div class="dampak-stat">
+                    <span class="angka-dampak">1,234</span><br>
+                    <span class="label-dampak">Donatur Aktif</span>
+                </div>
+                <div class="dampak-stat">
+                    <span class="angka-dampak">25</span><br>
+                    <span class="label-dampak">Kota Terjangkau</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Tentang -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tentang FoodCycle</h2>
+                <p>Kami adalah platform yang berdedikasi untuk mengurangi limbah makanan dan menyalurkan makanan surplus kepada mereka yang membutuhkan</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Misi Kami</h3>
+                    <p>FoodCycle hadir untuk menciptakan Indonesia tanpa kelaparan dan limbah makanan. Kami menghubungkan restoran, UMKM, dan individu yang memiliki makanan surplus dengan komunitas yang membutuhkan melalui teknologi digital yang mudah digunakan.</p>
+                    <p>Didirikan pada tahun 2023, kami telah bermitra dengan ratusan donatur dan relawan di seluruh Indonesia untuk menyelamatkan ribuan kilogram makanan dan mendistribusikannya ke keluarga, panti asuhan, dan komunitas marginal. Setiap donasi membantu mengurangi emisi karbon dan mendukung lingkungan yang lebih bersih.</p>
+                    <a href="#" class="btn btn-primary">Pelajari Lebih Lanjut</a>
+                </div>
+                <div class="about-image">
+                    <img src="gambar2.jpg" alt="About FoodCycle">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- testimoni Section -->
+    <section class="testimoni" id="testimoni">
+        <div class="container">
+            <div class="section-header">
+                <h2>Apa Kata Mereka</h2>
+                <p>Cerita dari donatur, relawan, dan penerima yang telah menjadi bagian dari perjalanan FoodCycle</p>
+            </div>
+            <div class="testimoni-grid">
+                <div class="kartu kartu-testimoni">
+                    <p class="teks-testimoni">"FoodCycle membuat saya merasa berkontribusi nyata. Donasi makanan dari restoran saya kini sampai ke keluarga yang membutuhkan dengan cepat dan aman."</p>
+                    <div class="penulis-testimoni">
+                        <img class="avatar-penulis" src="" alt="Ani Susanti">
+                        <div class="author-info">
+                            <h4>Ani Susanti</h4>
+                            <p>Pemilik Restoran, Jakarta</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kartu kartu-testimoni">
+                    <p class="teks-testimoni">"Sebagai relawan, saya bangga bisa mengantar makanan ke panti asuhan. Aplikasi FoodCycle sangat membantu koordinasi!"</p>
+                    <div class="penulis-testimoni">
+                        <img class="avatar-penulis" src="" alt="Budi Santoso">
+                        <div class="author-info">
+                            <h4>Budi Santoso</h4>
+                            <p>Relawan, Surabaya</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kartu kartu-testimoni">
+                    <p class="teks-testimoni">"Makanan yang kami terima dari FoodCycle sangat membantu anak-anak di panti. Terima kasih atas kebaikan hati semua donatur!"</p>
+                    <div class="penulis-testimoni">
+                        <img class="avatar-penulis" src="" alt="Ibu Ratna">
+                        <div class="author-info">
+                            <h4>Ibu Ratna</h4>
+                            <p>Pengelola Panti Asuhan, Bandung</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news" id="berita">
+        <div class="container">
+            <div class="section-header">
+                <h2>Berita Terbaru</h2>
+                <p>Ikuti kabar terbaru tentang inisiatif dan dampak FoodCycle di seluruh Indonesia</p>
+            </div>
+            <div class="news-grid">
+                <div class="kartu kartu-berita">
+                    <div class="news-image">
+                        <img src="" alt="News 1">
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">FoodCycle Capai 1 Ton Makanan Diselamatkan di Jakarta</h3>
+                        <p class="kutipan-berita">Pada bulan ini, FoodCycle berhasil menyelamatkan 1 ton makanan surplus dari restoran dan UMKM di Jakarta, didistribusikan ke 500 keluarga.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya</a>
+                    </div>
+                </div>
+                <div class="kartu kartu-berita">
+                    <div class="news-image">
+                        <img src="" alt="News 2">
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Kerjasama Baru dengan Pasar Tradisional</h3>
+                        <p class="kutipan-berita">FoodCycle kini bermitra dengan pasar tradisional di Surabaya untuk mengumpulkan sayuran dan buah surplus, mendukung petani lokal.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya</a>
+                    </div>
+                </div>
+                <div class="kartu kartu-berita">
+                    <div class="news-image">
+                        <img src="" alt="News 3">
+                    </div>
+                    <div class="news-content">
+                        <h3 class="news-title">Relawan FoodCycle Rayakan Hari Lingkungan</h3>
+                        <p class="kutipan-berita">Pada Hari Lingkungan Sedunia, relawan FoodCycle mengadakan kampanye edukasi tentang pengurangan limbah makanan di 10 kota.</p>
+                        <a href="#" class="news-link">Baca Selengkapnya</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="cta-section">
+        <div class="container">
+            <h2>Mari Mulai Berbagi Hari Ini</h2>
+            <p>Bergabunglah dengan ribuan orang yang telah memilih untuk membuat perbedaan. Setiap kontribusi Anda sangat berarti.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">Mulai Donasi</a>
+                <a href="#" class="btn btn-secondary">Jadi Relawan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="kontak">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FoodCycle</h3>
+                    <p>Platform digital yang menghubungkan surplus makanan dengan mereka yang membutuhkan. Bersama-sama kita ciptakan Indonesia tanpa kelaparan dan waste makanan.</p>
+                    <div class="social-links">
+                        <a href="#">Facebook</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">LinkedIn</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Menu Utama</h3>
+                    <a href="#home">Beranda</a><br>
+                    <a href="#about">Tentang Kami</a><br>
+                    <a href="#fitur">Fitur</a><br>
+                    <a href="#carakerja">Cara Kerja</a><br>
+                    <a href="#dampak">Dampak</a><br>
+                    <a href="#testimoni">Testimoni</a><br>
+                    <a href="#berita">Berita</a><br>
+                    <a href="#kontak">Kontak</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Layanan</h3>
+                    <a href="#">Donasi Makanan</a><br>
+                    <a href="#">Minta Bantuan</a><br>
+                    <a href="#">Jadi Relawan</a><br>
+                    <a href="#">Partnership</a><br>
+                    <a href="#">Laporan Dampak</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Kontak</h3>
+                    <p>Email: hello@foodcycle.id</p>
+                    <p>Telp: +62 812 1234 5678</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FoodCycle. All Rights Reserved.</p>
+            </div>
         </div>
     </footer>
 </body>
