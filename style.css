@@ -18,6 +18,26 @@ body {
     padding: 0 20px;
 }
 
+/* Loading Spinner */
+.loading-spinner {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 5px solid #4caf50;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 3000;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 /* DARK MODE STYLES */
 body.dark-mode {
     background: #121212;
@@ -37,28 +57,15 @@ body.dark-mode .nav-links a {
     color: #e0e0e0;
 }
 
-body.dark-mode .hero {
+body.dark-mode .hero,
+body.dark-mode .features,
+body.dark-mode .cara-kerja,
+body.dark-mode .about,
+body.dark-mode .testimoni,
+body.dark-mode .news,
+body.dark-mode .contact-form-container,
+body.dark-mode .modal-content {
     background: #1a1a1a;
-}
-
-body.dark-mode .features {
-    background: #121212;
-}
-
-body.dark-mode .cara-kerja {
-    background: #1a1a1a;
-}
-
-body.dark-mode .about {
-    background: #121212;
-}
-
-body.dark-mode .testimoni {
-    background: #1a1a1a;
-}
-
-body.dark-mode .news {
-    background: #121212;
 }
 
 body.dark-mode .kartu {
@@ -120,6 +127,8 @@ body.dark-mode .section-header p {
     font-size: 1rem;
     font-weight: 500;
     transition: color 0.3s ease;
+    position: relative;
+    z-index: 1001;
 }
 
 .nav-links a:hover {
@@ -136,6 +145,7 @@ body.dark-mode .section-header p {
     cursor: pointer;
     padding: 5px;
     transition: transform 0.3s ease;
+    z-index: 1002;
 }
 
 .mobile-menu-btn:hover {
@@ -158,6 +168,7 @@ body.dark-mode .section-header p {
     font-size: 1.2rem;
     transition: all 0.3s ease;
     margin-left: 10px;
+    z-index: 1002;
 }
 
 .dark-mode-toggle:hover,
@@ -248,17 +259,18 @@ body.dark-mode .section-header p {
     color: #fff;
 }
 
-.statistik {
+.statistik, .dashboard-stats {
     display: flex;
     gap: 30px;
     margin-top: 30px;
 }
 
-.item-statistik {
+.item-statistik, .kartu-stat {
     text-align: center;
+    flex: 1;
 }
 
-.angka-statistik {
+.angka-statistik, .stat-number {
     font-size: 1.8rem;
     font-weight: 700;
     color: #4caf50;
@@ -357,23 +369,23 @@ body.dark-mode .section-header p {
     margin: 0 auto;
 }
 
-.features-grid {
+.features-grid, .dashboard-actions {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
-.kartu-fitur {
+.kartu-fitur, .kartu-stat {
     padding: 25px;
 }
 
-.kartu-fitur h3 {
+.kartu-fitur h3, .kartu-stat h3 {
     font-size: 1.4rem;
     color: #2e7d32;
     margin-bottom: 10px;
 }
 
-.kartu-fitur p {
+.kartu-fitur p, .kartu-stat p {
     font-size: 1rem;
     color: #616161;
 }
@@ -675,9 +687,7 @@ body.dark-mode .section-header p {
     justify-content: center;
 }
 
-/* =========================
-   MODAL STYLES
-========================= */
+/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -763,9 +773,27 @@ body.dark-mode .section-header p {
     border-color: #4caf50;
 }
 
-/* =========================
-   NOTIFICATION STYLES
-========================= */
+.form-group input.invalid,
+.form-group select.invalid,
+.form-group textarea.invalid {
+    border-color: #f44336;
+}
+
+/* Forgot Password and Register Link */
+.forgot-password, .register-link {
+    color: #4caf50;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.forgot-password:hover, .register-link:hover {
+    color: #2e7d32;
+    text-decoration: underline;
+}
+
+/* Notification Styles */
 .notification {
     position: fixed;
     top: 100px;
@@ -809,9 +837,7 @@ body.dark-mode .section-header p {
     margin-left: 15px;
 }
 
-/* =========================
-   SEARCH RESULTS
-========================= */
+/* Search Results */
 .search-results {
     max-height: 400px;
     overflow-y: auto;
@@ -842,9 +868,7 @@ body.dark-mode .section-header p {
     border-radius: 3px;
 }
 
-/* =========================
-   CONTACT FORM
-========================= */
+/* Contact Form */
 .contact-form-container {
     margin-top: 40px;
     background: #f5f5f5;
@@ -858,9 +882,7 @@ body.dark-mode .section-header p {
     text-align: center;
 }
 
-/* =========================
-   FLOATING ACTION BUTTON
-========================= */
+/* Floating Action Button */
 .floating-action-btn {
     position: fixed;
     bottom: 100px;
@@ -885,9 +907,7 @@ body.dark-mode .section-header p {
     transform: scale(1.1);
 }
 
-/* =========================
-   SCROLL TO TOP BUTTON
-========================= */
+/* Scroll to Top Button */
 .scroll-top-btn {
     position: fixed;
     bottom: 20px;
@@ -917,68 +937,49 @@ body.dark-mode .section-header p {
     transform: scale(1.1);
 }
 
-/* Footer */
+/* Footer Styles */
 .footer {
-    padding: 60px 0 30px;
+    padding: 60px 0;
     background: #212121;
-    color: #fff;
 }
 
 .footer-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
+    margin-bottom: 30px;
 }
 
 .footer-section h3 {
     font-size: 1.4rem;
-    color: #4caf50;
+    color: #2e7d32;
     margin-bottom: 15px;
 }
 
-.footer-section p,
-.footer-section a {
-    color: #b0b0b0;
+.footer-section p, .footer-section a {
+    font-size: 1rem;
+    color: #d7caca;
     text-decoration: none;
-    font-size: 0.9rem;
-    line-height: 1.8;
-    transition: color 0.3s ease;
+    margin-bottom: 10px;
+    display: block;
 }
 
 .footer-section a:hover {
     color: #4caf50;
 }
 
-.social-links {
-    display: flex;
-    gap: 15px;
-}
-
-.social-links a {
-    color: #b0b0b0;
-    padding: 8px 12px;
-    border: 1px solid #444;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-.social-links a:hover {
-    color: #4caf50;
-    border-color: #4caf50;
-}
-
 .footer-bottom {
     text-align: center;
-    margin-top: 30px;
-    color: #b0b0b0;
-    font-size: 0.9rem;
-    border-top: 1px solid #444;
     padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
 }
 
-/* =========================
-   MOBILE RESPONSIVENESS
-========================= */
+.footer-bottom p {
+    font-size: 0.9rem;
+    color: #d7caca;
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
     .mobile-menu-btn {
         display: block;
@@ -1005,6 +1006,10 @@ body.dark-mode .section-header p {
         visibility: visible;
     }
     
+    .nav-links.mobile-active a {
+        pointer-events: auto;
+    }
+    
     body.dark-mode .nav-links {
         background: #1e1e1e;
     }
@@ -1020,12 +1025,13 @@ body.dark-mode .section-header p {
     }
 
     .hero-buttons,
-    .cta-buttons {
+    .cta-buttons,
+    .dashboard-actions {
         flex-direction: column;
         gap: 10px;
     }
 
-    .statistik {
+    .statistik, .dashboard-stats {
         flex-wrap: wrap;
         justify-content: center;
         gap: 20px;
@@ -1041,7 +1047,8 @@ body.dark-mode .section-header p {
     .langkah,
     .grid-dampak,
     .testimoni-grid,
-    .news-grid {
+    .news-grid,
+    .footer-content {
         grid-template-columns: 1fr;
     }
 

@@ -1,3 +1,10 @@
+<?php
+session_start();
+$welcome_message = isset($_SESSION['welcome_message']) ? $_SESSION['welcome_message'] : null;
+if ($welcome_message) {
+    unset($_SESSION['welcome_message']); // Hapus setelah ditampilkan
+}
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,15 +12,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodCycle - Berbagi Makanan, Berbagi Harapan</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="description" content="Platform digital yang menghubungkan donatur makanan dengan mereka yang membutuhkan. Mari bersama-sama mengurangi food waste dan membantu sesama.">
-    <meta name="keywords" content="donasi makanan, food waste, berbagi makanan, platform donasi, Indonesia">
 </head>
 <body>
-    <!-- Navigation -->
+    <div id="loading-spinner" class="loading-spinner"></div>
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
-                <a href="#home" class="logo">FoodCycle</a>
+                <a href="index.php" class="logo">FoodCycle</a>
                 <ul class="nav-links">
                     <li><a href="#home">Beranda</a></li>
                     <li><a href="#about">Tentang Kami</a></li>
@@ -23,22 +28,34 @@
                     <li><a href="#testimoni">Testimoni</a></li>
                     <li><a href="#berita">Berita</a></li>
                     <li><a href="#kontak">Kontak</a></li>
+                    <?php if (isset($_SESSION['username'])): ?>
+                        <li><a href="dashboard.php">Dashboard (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a></li>
+                        <li><a href="logout.php">Logout</a></li>
+                    <?php else: ?>
+                        <li><a href="login.php">Login</a></li>
+                    <?php endif; ?>
                 </ul>
-                <a href="#" class="btn btn-cta">Mulai Donasi</a>
+                <button class="btn btn-cta" data-action="donate">Mulai Donasi</button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
+    <?php if ($welcome_message): ?>
+        <div class="notification success show">
+            <span><?php echo htmlspecialchars($welcome_message); ?></span>
+            <button class="notification-close">&times;</button>
+        </div>
+    <?php endif; ?>
+
+    <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1>Berbagi <span class="highlight">Makanan</span>, Berbagi Harapan</h1>
+                    <h1>Berbagi Makanan, <span class="highlight">Berbagi Harapan</span></h1>
                     <p>Platform digital yang menghubungkan donatur makanan dengan mereka yang membutuhkan. Mari bersama-sama mengurangi food waste dan membantu sesama.</p>
                     <div class="hero-buttons">
-                        <a href="#" class="btn btn-primary">Donasi Sekarang</a>
-                        <a href="#" class="btn btn-secondary">Jadi Relawan</a>
+                        <button class="btn btn-primary" data-action="donate">Donasi Sekarang</button>
+                        <button class="btn btn-secondary" data-action="volunteer">Jadi Relawan</button>
                     </div>
                     <div class="statistik">
                         <div class="item-statistik">
@@ -56,7 +73,7 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="gambar1.jpg" alt="Makanan Donasi">
+                    <img src="assets/gambar1.jpg" alt="FoodCycle">
                     <div class="kartu kartu-mengambang kartu1">
                         <h4>100 Porsi</h4>
                         <p>Diselamatkan hari ini</p>
@@ -70,8 +87,7 @@
         </div>
     </section>
 
-    <!-- Section Fitur -->
-    <section class="features" id="fitur">
+    <section id="fitur" class="features">
         <div class="container">
             <div class="section-header">
                 <h2>Mengapa Memilih FoodCycle?</h2>
@@ -106,8 +122,7 @@
         </div>
     </section>
 
-    <!-- section cara kerja -->
-    <section class="cara-kerja" id="carakerja">
+    <section id="carakerja" class="cara-kerja">
         <div class="container">
             <div class="section-header">
                 <h2>Cara Kerja FoodCycle</h2>
@@ -138,41 +153,35 @@
         </div>
     </section>
 
-    <!-- Section Dampak -->
-    <section class="dampak" id="dampak">
+    <section id="dampak" class="dampak">
         <div class="container">
             <div class="section-header">
-                <h2 style="color: aliceblue;">Dampak Yang Telah Kami Ciptakan</h2>
-                <p style="color: aliceblue;">Bersama-sama, kita telah membuat perubahan nyata dalam mengurangi food waste dan membantu masyarakat</p>
+                <h2 style="color: white">Dampak Yang Telah Kami Ciptakan</h2>
+                <p style="color: white">Bersama-sama, kita telah membuat perubahan nyata dalam mengurangi food waste dan membantu masyarakat</p>
             </div>
             <div class="grid-dampak">
                 <div class="dampak-stat">
-                    <span class="angka-dampak">15,234</span><br>
+                    <span class="angka-dampak">15,234</span>
                     <span class="label-dampak">Kg Makanan Diselamatkan</span>
                 </div>
                 <div class="dampak-stat">
-                    <span class="angka-dampak">8,567</span><br>
+                    <span class="angka-dampak">8,567</span>
                     <span class="label-dampak">Keluarga Terbantu</span>
                 </div>
                 <div class="dampak-stat">
-                    <span class="angka-dampak">1,234</span><br>
+                    <span class="angka-dampak">1,234</span>
                     <span class="label-dampak">Donatur Aktif</span>
                 </div>
                 <div class="dampak-stat">
-                    <span class="angka-dampak">25</span><br>
+                    <span class="angka-dampak">25</span>
                     <span class="label-dampak">Kota Terjangkau</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section Tentang -->
-    <section class="about" id="about">
+    <section id="about" class="about">
         <div class="container">
-            <div class="section-header">
-                <h2>Tentang FoodCycle</h2>
-                <p>Kami adalah platform yang berdedikasi untuk mengurangi limbah makanan dan menyalurkan makanan surplus kepada mereka yang membutuhkan</p>
-            </div>
             <div class="about-content">
                 <div class="about-text">
                     <h3>Misi Kami</h3>
@@ -181,14 +190,13 @@
                     <a href="#" class="btn btn-primary">Pelajari Lebih Lanjut</a>
                 </div>
                 <div class="about-image">
-                    <img src="gambar2.jpg" alt="About FoodCycle">
+                    <img src="assets/gambar2.jpg" alt="Tentang FoodCycle">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- testimoni Section -->
-    <section class="testimoni" id="testimoni">
+    <section id="testimoni" class="testimoni">
         <div class="container">
             <div class="section-header">
                 <h2>Apa Kata Mereka</h2>
@@ -198,7 +206,7 @@
                 <div class="kartu kartu-testimoni">
                     <p class="teks-testimoni">"FoodCycle membuat saya merasa berkontribusi nyata. Donasi makanan dari restoran saya kini sampai ke keluarga yang membutuhkan dengan cepat dan aman."</p>
                     <div class="penulis-testimoni">
-                        <img class="avatar-penulis" src="" alt="Ani Susanti">
+                        <div class="avatar-penulis"></div>
                         <div class="author-info">
                             <h4>Ani Susanti</h4>
                             <p>Pemilik Restoran, Jakarta</p>
@@ -208,7 +216,7 @@
                 <div class="kartu kartu-testimoni">
                     <p class="teks-testimoni">"Sebagai relawan, saya bangga bisa mengantar makanan ke panti asuhan. Aplikasi FoodCycle sangat membantu koordinasi!"</p>
                     <div class="penulis-testimoni">
-                        <img class="avatar-penulis" src="" alt="Budi Santoso">
+                        <div class="avatar-penulis"></div>
                         <div class="author-info">
                             <h4>Budi Santoso</h4>
                             <p>Relawan, Surabaya</p>
@@ -218,7 +226,7 @@
                 <div class="kartu kartu-testimoni">
                     <p class="teks-testimoni">"Makanan yang kami terima dari FoodCycle sangat membantu anak-anak di panti. Terima kasih atas kebaikan hati semua donatur!"</p>
                     <div class="penulis-testimoni">
-                        <img class="avatar-penulis" src="" alt="Ibu Ratna">
+                        <div class="avatar-penulis"></div>
                         <div class="author-info">
                             <h4>Ibu Ratna</h4>
                             <p>Pengelola Panti Asuhan, Bandung</p>
@@ -229,8 +237,7 @@
         </div>
     </section>
 
-    <!-- News Section -->
-    <section class="news" id="berita">
+    <section id="berita" class="news">
         <div class="container">
             <div class="section-header">
                 <h2>Berita Terbaru</h2>
@@ -238,9 +245,7 @@
             </div>
             <div class="news-grid">
                 <div class="kartu kartu-berita">
-                    <div class="news-image">
-                        <img src="gambar3.jpg" alt="News 1">
-                    </div>
+                    <div class="news-image"><img src="assets/gambar3.jpg" alt="Berita 1"></div>
                     <div class="news-content">
                         <h3 class="news-title">FoodCycle Capai 1 Ton Makanan Diselamatkan di Jakarta</h3>
                         <p class="kutipan-berita">Pada bulan ini, FoodCycle berhasil menyelamatkan 1 ton makanan surplus dari restoran dan UMKM di Jakarta, didistribusikan ke 500 keluarga.</p>
@@ -248,9 +253,7 @@
                     </div>
                 </div>
                 <div class="kartu kartu-berita">
-                    <div class="news-image">
-                        <img src="gambar4.jpg" alt="News 2">
-                    </div>
+                    <div class="news-image"><img src="assets/gambar4.jpg" alt="Berita 2"></div>
                     <div class="news-content">
                         <h3 class="news-title">Kerjasama Baru dengan Pasar Tradisional</h3>
                         <p class="kutipan-berita">FoodCycle kini bermitra dengan pasar tradisional di Surabaya untuk mengumpulkan sayuran dan buah surplus, mendukung petani lokal.</p>
@@ -258,9 +261,7 @@
                     </div>
                 </div>
                 <div class="kartu kartu-berita">
-                    <div class="news-image">
-                        <img src="gambar5.jpg" alt="News 3">
-                    </div>
+                    <div class="news-image"><img src="assets/gambar5.jpg" alt="Berita 3"></div>
                     <div class="news-content">
                         <h3 class="news-title">Relawan FoodCycle Rayakan Hari Lingkungan</h3>
                         <p class="kutipan-berita">Pada Hari Lingkungan Sedunia, relawan FoodCycle mengadakan kampanye edukasi tentang pengurangan limbah makanan di 10 kota.</p>
@@ -271,58 +272,71 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section" id="cta-section">
+    <section class="cta-section">
         <div class="container">
             <h2>Mari Mulai Berbagi Hari Ini</h2>
             <p>Bergabunglah dengan ribuan orang yang telah memilih untuk membuat perbedaan. Setiap kontribusi Anda sangat berarti.</p>
             <div class="cta-buttons">
-                <a href="#" class="btn btn-primary">Mulai Donasi</a>
-                <a href="#" class="btn btn-secondary">Jadi Relawan</a>
+                <button class="btn btn-primary" data-action="donate">Mulai Donasi</button>
+                <button class="btn btn-secondary" data-action="volunteer">Jadi Relawan</button>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer" id="kontak">
+    <footer id="kontak" class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>FoodCycle</h3>
                     <p>Platform digital yang menghubungkan surplus makanan dengan mereka yang membutuhkan. Bersama-sama kita ciptakan Indonesia tanpa kelaparan dan waste makanan.</p>
                     <div class="social-links">
-                        <a href="#">Facebook</a>
-                        <a href="#">Twitter</a>
-                        <a href="#">Instagram</a>
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">Instagram</a>
                     </div>
                 </div>
                 <div class="footer-section">
                     <h3>Menu Utama</h3>
-                    <a href="#home">Beranda</a><br>
-                    <a href="#about">Tentang Kami</a><br>
-                    <a href="#fitur">Fitur</a><br>
-                    <a href="#carakerja">Cara Kerja</a><br>
-                    <a href="#dampak">Dampak</a><br>
-                    <a href="#testimoni">Testimoni</a><br>
-                    <a href="#berita">Berita</a><br>
+                    <a href="#home">Beranda</a>
+                    <a href="#about">Tentang Kami</a>
+                    <a href="#fitur">Fitur</a>
+                    <a href="#carakerja">Cara Kerja</a>
+                    <a href="#dampak">Dampak</a>
+                    <a href="#testimoni">Testimoni</a>
+                    <a href="#berita">Berita</a>
                     <a href="#kontak">Kontak</a>
                 </div>
                 <div class="footer-section">
                     <h3>Layanan</h3>
-                    <a href="#">Donasi Makanan</a><br>
-                    <a href="#">Minta Bantuan</a><br>
-                    <a href="#">Jadi Relawan</a><br>
-                    <a href="#">Partnership</a><br>
+                    <a href="#" data-action="donate">Donasi Makanan</a>
+                    <a href="#">Minta Bantuan</a>
+                    <a href="#" data-action="volunteer">Jadi Relawan</a>
+                    <a href="#">Partnership</a>
                     <a href="#">Laporan Dampak</a>
                 </div>
                 <div class="footer-section">
                     <h3>Kontak</h3>
-                    <p>Email: hello@foodcycle.id</p>
-                    <p>Telp: +62 812 1234 5678</p>
+                    <p>Email: <a href="mailto:hello@foodcycle.id">hello@foodcycle.id</a></p>
+                    <p>Telp: <a href="tel:+6281212345678">+62 812 1234 5678</a></p>
                 </div>
             </div>
+            <div class="contact-form-container">
+                <h3>Kirim Pesan</h3>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <input type="text" name="contact-name" placeholder="Nama Lengkap" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="contact-email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="contact-message" placeholder="Pesan Anda" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-action="contact">Kirim Pesan</button>
+                </form>
+            </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 FoodCycle. All Rights Reserved.</p>
+                <p>© 2025 FoodCycle. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

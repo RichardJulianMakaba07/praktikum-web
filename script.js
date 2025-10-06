@@ -1,5 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
+    // Ambil status login dari atribut data di body
+    const isLoggedIn = document.body.dataset.loggedIn === 'true';
+
+    // ===== LOADING SPINNER =====
+    function showLoadingSpinner() {
+        const spinner = document.getElementById('loading-spinner');
+        if (spinner) {
+            spinner.style.display = 'block';
+        }
+    }
+
+    function hideLoadingSpinner() {
+        const spinner = document.getElementById('loading-spinner');
+        if (spinner) {
+            spinner.style.display = 'none';
+        }
+    }
+
     // ===== NAVBAR SCROLL EFFECT =====
     const navbar = document.querySelector('.navbar');
     const navLinks = document.querySelectorAll('.nav-links a');
@@ -12,19 +29,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ===== SMOOTH SCROLL FOR NAVIGATION =====
+    // ===== SMOOTH SCROLL AND EXTERNAL LINK HANDLING =====
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetSection = document.querySelector(targetId);
+            console.log('Link clicked:', this.getAttribute('href')); // Debugging
+            const href = this.getAttribute('href');
             
-            if (targetSection) {
-                const offsetTop = targetSection.offsetTop - 80;
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const targetSection = document.querySelector(href);
+                if (targetSection) {
+                    const offsetTop = targetSection.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            } else {
+                e.preventDefault();
+                showLoadingSpinner();
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 500); // Delay untuk menunjukkan spinner
             }
         });
     });
@@ -43,13 +69,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     mobileMenuBtn.addEventListener('click', function() {
+        console.log('Mobile menu toggled'); // Debugging
         navLinksContainer.classList.toggle('mobile-active');
         this.classList.toggle('active');
         this.innerHTML = this.classList.contains('active') ? '✕' : '☰';
     });
 
     // ===== ANIMATED COUNTERS =====
-    const counters = document.querySelectorAll('.angka-statistik, .angka-dampak');
+    const counters = document.querySelectorAll('.angka-statistik, .angka-dampak, .stat-number');
     const observerOptions = {
         threshold: 0.5,
         rootMargin: '0px'
@@ -69,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function animateCounter(element) {
-        const target = parseInt(element.textContent.replace(/[^\d]/g, ''));
+        const target = parseInt(element.textContent.replace(/[^\d]/g, '')) || 0;
         const suffix = element.textContent.replace(/[\d]/g, '');
         let current = 0;
         const increment = target / 100;
@@ -84,20 +111,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             if (target >= 1000) {
-                element.textContent = (Math.floor(current / 1000)) + 'K' + suffix;
+                element.textContent = Math.floor(current / 1000) + 'K' + suffix;
             } else {
                 element.textContent = Math.floor(current) + suffix;
             }
         }, stepTime);
     }
 
-    // ===== DONATION FORM MODAL =====
-    const donationBtns = document.querySelectorAll('.btn-primary, .btn-cta');
-    const volunteerBtns = document.querySelectorAll('.btn-secondary');
-    
-    // Create modal HTML
+    // ===== DONATION AND VOLUNTEER FORM MODAL =====
     createDonationModal();
     createVolunteerModal();
+    createContactModal();
     
     function createDonationModal() {
         const modalHTML = `
@@ -112,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="form-group">
                             <label for="donor-phone">Nomor Telepon:</label>
-                            <input type="tel" id="donor-phone" name="donor-phone" required>
+                            <input type="tel" id="donor-phone" name="donor-phone" required pattern="[0-9]{10,12}" title="Nomor telepon harus 10-12 angka">
                         </div>
                         <div class="form-group">
                             <label for="food-type">Jenis Makanan:</label>
@@ -166,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div class="form-group">
                             <label for="volunteer-phone">Nomor Telepon:</label>
-                            <input type="tel" id="volunteer-phone" name="volunteer-phone" required>
+                            <input type="tel" id="volunteer-phone" name="volunteer-phone" required pattern="[0-9]{10,12}" title="Nomor telepon harus 10-12 angka">
                         </div>
                         <div class="form-group">
                             <label for="volunteer-area">Area Tempat Tinggal:</label>
@@ -204,44 +228,81 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.insertAdjacentHTML('beforeend', modalHTML);
     }
 
-    // Modal event listeners
-    const donationModal = document.getElementById('donation-modal');
-    const volunteerModal = document.getElementById('volunteer-modal');
-    
-    // Open modals
-    donationBtns.forEach(btn => {
+    function createContactModal() {
+        const modalHTML = `
+            <div id="contact-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Kirim Pesan</h2>
+                    <form id="contact-modal-form">
+                        <div class="form-group">
+                            <label for="contact-name">Nama Lengkap:</label>
+                            <input type="text" id="contact-name" name="contact-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-email">Email:</label>
+                            <input type="email" id="contact-email" name="contact-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact-message">Pesan Anda:</label>
+                            <textarea id="contact-message" name="contact-message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+    }
+
+    // ===== PROTECTED ACTIONS =====
+    const actionButtons = document.querySelectorAll('[data-action]');
+    actionButtons.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            if (this.textContent.includes('Donasi') || this.classList.contains('btn-cta')) {
-                e.preventDefault();
-                donationModal.style.display = 'block';
+            e.preventDefault();
+            const action = this.dataset.action;
+            if (!isLoggedIn) {
+                showNotification('Silakan login terlebih dahulu untuk melanjutkan.', 'info');
+                showLoadingSpinner();
+                setTimeout(() => {
+                    window.location.href = `login.php?redirect=${action}`;
+                }, 500);
+                return;
+            }
+
+            if (action === 'donate') {
+                document.getElementById('donation-modal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            } else if (action === 'volunteer') {
+                document.getElementById('volunteer-modal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            } else if (action === 'contact') {
+                document.getElementById('contact-modal').style.display = 'block';
                 document.body.style.overflow = 'hidden';
             }
         });
     });
-    
-    volunteerBtns.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            volunteerModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
-    });
 
-    // Close modals
+    // ===== MODAL HANDLING =====
+    const donationModal = document.getElementById('donation-modal');
+    const volunteerModal = document.getElementById('volunteer-modal');
+    const contactModal = document.getElementById('contact-modal');
+    
     const closeButtons = document.querySelectorAll('.close');
     closeButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             donationModal.style.display = 'none';
             volunteerModal.style.display = 'none';
+            contactModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         });
     });
 
-    // Close modal when clicking outside
     window.addEventListener('click', function(e) {
-        if (e.target === donationModal || e.target === volunteerModal) {
+        if (e.target === donationModal || e.target === volunteerModal || e.target === contactModal) {
             donationModal.style.display = 'none';
             volunteerModal.style.display = 'none';
+            contactModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
     });
@@ -249,41 +310,77 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== FORM SUBMISSIONS =====
     const donationForm = document.getElementById('donation-form');
     const volunteerForm = document.getElementById('volunteer-form');
+    const contactForm = document.getElementById('contact-form');
+    const contactModalForm = document.getElementById('contact-modal-form');
 
-    donationForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Simulate form submission
-        const formData = new FormData(this);
-        const donationData = Object.fromEntries(formData);
-        
-        // Show success message
-        showNotification('Terima kasih! Donasi Anda telah berhasil didaftarkan. Tim kami akan menghubungi Anda segera.', 'success');
-        
-        // Reset form and close modal
-        this.reset();
-        donationModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        
-        // Update statistics (simulate)
-        updateStatistics();
-    });
+    if (donationForm) {
+        donationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm(this)) {
+                const formData = new FormData(this);
+                const donationData = Object.fromEntries(formData);
+                showNotification('Terima kasih! Donasi Anda telah berhasil didaftarkan. Tim kami akan menghubungi Anda segera.', 'success');
+                this.reset();
+                donationModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                updateStatistics();
+            }
+        });
+    }
 
-    volunteerForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Simulate form submission
-        const formData = new FormData(this);
-        const volunteerData = Object.fromEntries(formData);
-        
-        // Show success message
-        showNotification('Selamat datang di keluarga FoodCycle! Kami akan menghubungi Anda untuk orientasi relawan.', 'success');
-        
-        // Reset form and close modal
-        this.reset();
-        volunteerModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    });
+    if (volunteerForm) {
+        volunteerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm(this)) {
+                const formData = new FormData(this);
+                const volunteerData = Object.fromEntries(formData);
+                showNotification('Selamat datang di keluarga FoodCycle! Kami akan menghubungi Anda untuk orientasi relawan.', 'success');
+                this.reset();
+                volunteerModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm(this)) {
+                showNotification('Pesan Anda telah terkirim! Kami akan membalas dalam 24 jam.', 'success');
+                this.reset();
+            }
+        });
+    }
+
+    if (contactModalForm) {
+        contactModalForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm(this)) {
+                showNotification('Pesan Anda telah terkirim! Kami akan membalas dalam 24 jam.', 'success');
+                this.reset();
+                contactModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    }
+
+    // ===== FORM VALIDATION =====
+    function validateForm(form) {
+        const inputs = form.querySelectorAll('input, select, textarea');
+        let valid = true;
+        inputs.forEach(input => {
+            if (!input.checkValidity()) {
+                input.classList.add('invalid');
+                valid = false;
+            } else {
+                input.classList.remove('invalid');
+            }
+        });
+        if (!valid) {
+            showNotification('Harap isi semua kolom dengan benar.', 'error');
+        }
+        return valid;
+    }
 
     // ===== NOTIFICATIONS =====
     function showNotification(message, type = 'info') {
@@ -293,20 +390,13 @@ document.addEventListener('DOMContentLoaded', function() {
             <span>${message}</span>
             <button class="notification-close">&times;</button>
         `;
-        
         document.body.appendChild(notification);
-        
-        // Show notification
         setTimeout(() => {
             notification.classList.add('show');
         }, 100);
-        
-        // Auto hide after 5 seconds
         setTimeout(() => {
             hideNotification(notification);
         }, 5000);
-        
-        // Close button functionality
         notification.querySelector('.notification-close').addEventListener('click', () => {
             hideNotification(notification);
         });
@@ -321,15 +411,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== UPDATE STATISTICS =====
     function updateStatistics() {
-        const stats = document.querySelectorAll('.angka-statistik');
+        const stats = document.querySelectorAll('.angka-statistik, .stat-number');
         stats.forEach(stat => {
-            const current = parseInt(stat.textContent.replace(/[^\d]/g, ''));
+            const current = parseInt(stat.textContent.replace(/[^\d]/g, '')) || 0;
             const newValue = current + Math.floor(Math.random() * 10) + 1;
-            
             if (stat.textContent.includes('K')) {
                 stat.textContent = Math.floor(newValue / 1000) + 'K+';
             } else {
-                stat.textContent = newValue + '+';
+                stat.textContent = newValue;
             }
         });
     }
@@ -343,20 +432,16 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.innerHTML = '🌙';
         toggle.setAttribute('aria-label', 'Toggle dark mode');
         document.querySelector('.nav-content').appendChild(toggle);
-        
-        // Check for saved theme preference
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'dark') {
             document.body.classList.add('dark-mode');
             toggle.innerHTML = '☀️';
         }
-        
         return toggle;
     }
 
     darkModeToggle.addEventListener('click', function() {
         document.body.classList.toggle('dark-mode');
-        
         if (document.body.classList.contains('dark-mode')) {
             this.innerHTML = '☀️';
             localStorage.setItem('theme', 'dark');
@@ -372,8 +457,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (testimonials.length > 0) {
         let currentTestimonial = 0;
-        
-        // Add carousel controls
         const carouselControls = document.createElement('div');
         carouselControls.className = 'carousel-controls';
         carouselControls.innerHTML = `
@@ -381,10 +464,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="carousel-dots"></div>
             <button class="carousel-btn next">›</button>
         `;
-        
         testimoniGrid.parentNode.appendChild(carouselControls);
-        
-        // Create dots
         const dotsContainer = carouselControls.querySelector('.carousel-dots');
         testimonials.forEach((_, index) => {
             const dot = document.createElement('button');
@@ -392,34 +472,25 @@ document.addEventListener('DOMContentLoaded', function() {
             dot.addEventListener('click', () => goToTestimonial(index));
             dotsContainer.appendChild(dot);
         });
-        
-        // Carousel functionality
         const prevBtn = carouselControls.querySelector('.prev');
         const nextBtn = carouselControls.querySelector('.next');
         const dots = carouselControls.querySelectorAll('.carousel-dot');
-        
         prevBtn.addEventListener('click', () => {
             currentTestimonial = currentTestimonial === 0 ? testimonials.length - 1 : currentTestimonial - 1;
             updateTestimonialDisplay();
         });
-        
         nextBtn.addEventListener('click', () => {
             currentTestimonial = currentTestimonial === testimonials.length - 1 ? 0 : currentTestimonial + 1;
             updateTestimonialDisplay();
         });
-        
         function goToTestimonial(index) {
             currentTestimonial = index;
             updateTestimonialDisplay();
         }
-        
         function updateTestimonialDisplay() {
-            // Update dots
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentTestimonial);
             });
-            
-            // For mobile, scroll to active testimonial
             if (window.innerWidth <= 768) {
                 testimonials[currentTestimonial].scrollIntoView({
                     behavior: 'smooth',
@@ -428,8 +499,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         }
-        
-        // Auto-rotate testimonials
         setInterval(() => {
             currentTestimonial = currentTestimonial === testimonials.length - 1 ? 0 : currentTestimonial + 1;
             updateTestimonialDisplay();
@@ -445,21 +514,18 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.innerHTML = '🔍';
         btn.setAttribute('aria-label', 'Search');
         document.querySelector('.nav-content').appendChild(btn);
-        
         btn.addEventListener('click', function() {
             const searchTerm = prompt('Cari informasi di FoodCycle:');
             if (searchTerm) {
                 performSearch(searchTerm);
             }
         });
-        
         return btn;
     }
 
     function performSearch(term) {
         const searchableElements = document.querySelectorAll('h1, h2, h3, p');
         const results = [];
-        
         searchableElements.forEach(element => {
             if (element.textContent.toLowerCase().includes(term.toLowerCase())) {
                 results.push({
@@ -469,7 +535,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         });
-        
         if (results.length > 0) {
             showSearchResults(results, term);
         } else {
@@ -484,7 +549,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <p>${highlightTerm(result.text, term)}</p>
             </div>
         `).join('');
-        
         const modal = document.createElement('div');
         modal.className = 'modal';
         modal.innerHTML = `
@@ -496,11 +560,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
         `;
-        
         document.body.appendChild(modal);
         modal.style.display = 'block';
-        
-        // Add click handlers for search results
         modal.querySelectorAll('.search-result').forEach(result => {
             result.addEventListener('click', function() {
                 const sectionId = this.dataset.section;
@@ -511,8 +572,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         });
-        
-        // Close modal
         modal.querySelector('.close').addEventListener('click', () => {
             modal.remove();
         });
@@ -556,41 +615,6 @@ document.addEventListener('DOMContentLoaded', function() {
         imageObserver.observe(img);
     });
 
-    // ===== CONTACT FORM  =====
-    createContactSection();
-    
-    function createContactSection() {
-        const contactSection = document.querySelector('#kontak .container');
-        if (contactSection) {
-            const contactForm = document.createElement('div');
-            contactForm.className = 'contact-form-container';
-            contactForm.innerHTML = `
-                <h3>Kirim Pesan</h3>
-                <form id="contact-form">
-                    <div class="form-group">
-                        <input type="text" name="contact-name" placeholder="Nama Lengkap" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" name="contact-email" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea name="contact-message" placeholder="Pesan Anda" rows="4" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Kirim Pesan</button>
-                </form>
-            `;
-            
-            contactSection.appendChild(contactForm);
-            
-            // Handle contact form submission
-            document.getElementById('contact-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                showNotification('Pesan Anda telah terkirim! Kami akan membalas dalam 24 jam.', 'success');
-                this.reset();
-            });
-        }
-    }
-
     // ===== FLOATING ACTION BUTTON =====
     const fab = document.createElement('div');
     fab.className = 'floating-action-btn';
@@ -599,6 +623,14 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.appendChild(fab);
 
     fab.addEventListener('click', function() {
+        if (!isLoggedIn) {
+            showNotification('Silakan login terlebih dahulu untuk menghubungi kami.', 'info');
+            showLoadingSpinner();
+            setTimeout(() => {
+                window.location.href = 'login.php?redirect=contact';
+            }, 500);
+            return;
+        }
         const phone = '+6281212345678';
         const message = 'Halo FoodCycle! Saya tertarik untuk berkontribusi.';
         const whatsappURL = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
@@ -626,6 +658,21 @@ document.addEventListener('DOMContentLoaded', function() {
             behavior: 'smooth'
         });
     });
+
+    // ===== LOGIN FORM VALIDATION =====
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            const username = document.getElementById('username');
+            const password = document.getElementById('password');
+            if (!username.value || !password.value) {
+                e.preventDefault();
+                showNotification('Harap isi username dan password.', 'error');
+                username.classList.add('invalid');
+                password.classList.add('invalid');
+            }
+        });
+    }
 
     console.log('FoodCycle website loaded successfully! 🌱');
 });
