@@ -1,30 +1,19 @@
 <?php
-session_start();
 include 'koneksi.php';
 
-// Jika sudah login, langsung ke dashboard
-if (isset($_SESSION['username'])) {
-    header("Location: dashboard.php");
-    exit;
-}
-
-// Proses login
-if (isset($_POST['login'])) {
+if (isset($_POST['register'])) {
     $username = $_POST['username'];
+    $nama = $_POST['nama_lengkap'];
     $password = md5($_POST['password']);
+    $level = 'user'; // default
 
-    $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-
-    if ($row) {
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['nama_lengkap'] = $row['nama_lengkap'];
-        $_SESSION['level'] = $row['level'];
-
-        echo "<script>alert('Login berhasil!');window.location='dashboard.php';</script>";
+    $check = mysqli_query($conn, "SELECT * FROM users WHERE username='$username'");
+    if (mysqli_num_rows($check) > 0) {
+        echo "<script>alert('Username sudah digunakan!');</script>";
     } else {
-        echo "<script>alert('Username atau password salah!');</script>";
+        mysqli_query($conn, "INSERT INTO users (username, password, nama_lengkap, level) 
+                             VALUES ('$username', '$password', '$nama', '$level')");
+        echo "<script>alert('Registrasi berhasil! Silakan login.');window.location='login.php';</script>";
     }
 }
 ?>
@@ -33,11 +22,10 @@ if (isset($_POST['login'])) {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Login - FoodCycle</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Register - FoodCycle</title>
     <style>
         body { background: #f5f5f5; font-family: 'Poppins', sans-serif; }
-        .login-box { width: 400px; margin: 100px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .register-box { width: 400px; margin: 100px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         h2 { text-align: center; color: #2e7d32; margin-bottom: 20px; }
         input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; }
         button { width: 100%; padding: 10px; background: #4caf50; color: #fff; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
@@ -48,15 +36,16 @@ if (isset($_POST['login'])) {
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <h2>Login FoodCycle</h2>
+    <div class="register-box">
+        <h2>Daftar Akun Baru</h2>
         <form method="POST">
             <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="nama_lengkap" placeholder="Nama Lengkap" required>
             <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" name="login">Masuk</button>
+            <button type="submit" name="register">Daftar</button>
         </form>
         <div class="link">
-            Belum punya akun? <a href="register.php">Daftar di sini</a>
+            Sudah punya akun? <a href="login.php">Login di sini</a>
         </div>
     </div>
 </body>

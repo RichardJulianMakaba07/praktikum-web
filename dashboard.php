@@ -1,80 +1,186 @@
 <?php
 session_start();
+include 'koneksi.php';
 
+// Pastikan user sudah login
 if (!isset($_SESSION['username'])) {
-    $_SESSION['redirect_after_login'] = 'dashboard.php';
     header("Location: login.php");
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - FoodCycle</title>
+    <title>Dashboard FoodCycle</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: #f7f7f7; color: #333; }
+        .container { width: 90%; margin: 50px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #2e7d32; text-align: center; margin-bottom: 30px; }
+        .tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .tabs button {
+            padding: 10px 20px;
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .tabs button:hover, .tabs button.active { background: #2e7d32; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        table th, table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #4caf50; color: #fff; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        a.btn { padding: 6px 12px; background: #4caf50; color: #fff; text-decoration: none; border-radius: 5px; font-size: 0.9rem; }
+        a.btn:hover { background: #2e7d32; }
+        .logout { float: right; color: #f44336; text-decoration: none; font-weight: bold; }
+    </style>
 </head>
 <body>
-    <div id="loading-spinner" class="loading-spinner"></div>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <a href="index.php" class="logo">FoodCycle</a>
-                <ul class="nav-links">
-                    <li><a href="index.php#home">Beranda</a></li>
-                    <li><a href="index.php#about">Tentang Kami</a></li>
-                    <li><a href="index.php#fitur">Fitur</a></li>
-                    <li><a href="index.php#carakerja">Cara Kerja</a></li>
-                    <li><a href="index.php#dampak">Dampak</a></li>
-                    <li><a href="index.php#testimoni">Testimoni</a></li>
-                    <li><a href="index.php#berita">Berita</a></li>
-                    <li><a href="index.php#kontak">Kontak</a></li>
-                    <li><a href="dashboard.php">Dashboard (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a></li>
-                    <li><a href="logout.php">Logout</a></li>
-                </ul>
-                <button class="btn btn-cta" data-action="donate">Mulai Donasi</button>
-            </div>
-        </div>
-    </nav>
 
-    <section class="container" style="padding: 80px 20px;">
-        <div class="section-header">
-            <h2>Selamat Datang, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h2>
-            <p>Pantau aktivitas Anda dan kelola donasi atau keikutsertaan sebagai relawan di FoodCycle.</p>
-        </div>
-        <div class="dashboard-stats">
-            <div class="kartu kartu-stat">
-                <h3>Total Donasi</h3>
-                <p class="stat-number">12</p>
-                <p>Porsi makanan telah Anda donasikan.</p>
-            </div>
-            <div class="kartu kartu-stat">
-                <h3>Jadwal Aktif</h3>
-                <p class="stat-number">3</p>
-                <p>Jadwal pickup menunggu konfirmasi.</p>
-            </div>
-            <div class="kartu kartu-stat">
-                <h3>Dampak</h3>
-                <p class="stat-number">25</p>
-                <p>Keluarga telah Anda bantu.</p>
-            </div>
-        </div>
-        <div class="dashboard-actions">
-            <button class="btn btn-primary" data-action="donate">Buat Donasi Baru</button>
-            <button class="btn btn-secondary" data-action="volunteer">Daftar Relawan</button>
-            <button class="btn btn-primary" data-action="contact">Hubungi Kami</button>
-        </div>
-    </section>
+<div class="container">
+    <a href="logout.php" class="logout">Logout</a>
+    <h1>Dashboard FoodCycle</h1>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>© 2025 FoodCycle. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <div class="tabs">
+        <button class="tablink active" onclick="openTab(event, 'donasi')">📦 Donasi</button>
+        <button class="tablink" onclick="openTab(event, 'relawan')">🤝 Relawan</button>
+        <button class="tablink" onclick="openTab(event, 'pesan')">💬 Pesan</button>
+    </div>
 
-    <script src="script.js"></script>
+    <!-- Tab Donasi -->
+    <div id="donasi" class="tab-content active">
+        <h2>Data Donasi Makanan</h2>
+        <a href="tambah.php" class="btn btn-primary">+ Tambah Donasi</a>
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Nama Donatur</th>
+                <th>Telepon</th>
+                <th>Jenis Makanan</th>
+                <th>Porsi</th>
+                <th>Pickup</th>
+                <th>Lokasi</th>
+                <th>Catatan</th>
+                <th>Aksi</th>
+            </tr>
+            <?php
+            $no = 1;
+            $donasi = mysqli_query($conn, "SELECT * FROM donations ORDER BY tanggal_donasi DESC");
+            while ($d = mysqli_fetch_assoc($donasi)) {
+                echo "<tr>
+                    <td>$no</td>
+                    <td>{$d['nama_donatur']}</td>
+                    <td>{$d['telepon']}</td>
+                    <td>{$d['jenis_makanan']}</td>
+                    <td>{$d['jumlah_porsi']}</td>
+                    <td>{$d['waktu_pickup']}</td>
+                    <td>{$d['lokasi']}</td>
+                    <td>{$d['catatan']}</td>
+                    <td>
+                        <a href='edit.php?id={$d['id']}' class='btn'>Edit</a>
+                        <a href='hapus.php?id={$d['id']}' class='btn' style='background:#f44336' onclick=\"return confirm('Hapus data ini?')\">Hapus</a>
+                    </td>
+                </tr>";
+                $no++;
+            }
+            ?>
+        </table>
+    </div>
+
+    <!-- Tab Relawan -->
+    <div id="relawan" class="tab-content">
+        <h2>Data Relawan</h2>
+        <a href="tambah_relawan.php" class="btn">+ Tambah Relawan</a>
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Telepon</th>
+                <th>Area</th>
+                <th>Ketersediaan</th>
+                <th>Transportasi</th>
+                <th>Alasan</th>
+                <th>Aksi</th>
+            </tr>
+            <?php
+            $no = 1;
+            $relawan = mysqli_query($conn, "SELECT * FROM volunteers ORDER BY tanggal_daftar DESC");
+            while ($r = mysqli_fetch_assoc($relawan)) {
+                echo "<tr>
+                    <td>$no</td>
+                    <td>{$r['nama_relawan']}</td>
+                    <td>{$r['email']}</td>
+                    <td>{$r['telepon']}</td>
+                    <td>{$r['area']}</td>
+                    <td>{$r['ketersediaan']}</td>
+                    <td>{$r['transportasi']}</td>
+                    <td>{$r['alasan']}</td>
+                    <td>
+                        <a href='edit_relawan.php?id={$r['id']}' class='btn'>Edit</a>
+                        <a href='hapus_relawan.php?id={$r['id']}' class='btn' style='background:#f44336' onclick=\"return confirm('Hapus relawan ini?')\">Hapus</a>
+                    </td>
+                </tr>";
+                $no++;
+            }
+            ?>
+        </table>
+    </div>
+
+    <!-- Tab Pesan -->
+    <div id="pesan" class="tab-content">
+        <h2>Pesan dari Pengguna</h2>
+        <a href="tambah_pesan.php" class="btn">+ Tambah Pesan</a>
+        <table>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Pesan</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+            </tr>
+            <?php
+            $no = 1;
+            $pesan = mysqli_query($conn, "SELECT * FROM messages ORDER BY tanggal DESC");
+            while ($p = mysqli_fetch_assoc($pesan)) {
+                echo "<tr>
+                    <td>$no</td>
+                    <td>{$p['nama']}</td>
+                    <td>{$p['email']}</td>
+                    <td>{$p['pesan']}</td>
+                    <td>{$p['tanggal']}</td>
+                    <td>
+                        <a href='edit_pesan.php?id={$p['id']}' class='btn'>Edit</a>
+                        <a href='hapus_pesan.php?id={$p['id']}' class='btn' style='background:#f44336' onclick=\"return confirm('Hapus pesan ini?')\">Hapus</a>
+                    </td>
+                </tr>";
+                $no++;
+            }
+            ?>
+        </table>
+    </div>
+</div>
+
+<script>
+function openTab(evt, tabName) {
+    const contents = document.querySelectorAll(".tab-content");
+    const tabs = document.querySelectorAll(".tablink");
+
+    contents.forEach(c => c.classList.remove("active"));
+    tabs.forEach(t => t.classList.remove("active"));
+
+    document.getElementById(tabName).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+</script>
+
 </body>
 </html>
